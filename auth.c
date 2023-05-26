@@ -84,7 +84,9 @@ unsigned int hashPassword(const char* password) {
 }
 
 int signUp(User* logged_in) {
-    if (logged_in->user_type != 3) {
+
+
+    if ( logged_in == NULL ||logged_in->user_type != 3) {
         printf("User not authorized");
         return -1;
     }

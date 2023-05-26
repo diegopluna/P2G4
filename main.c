@@ -25,6 +25,10 @@ int main() {
                 signUp(loggedInUser);
                 break;
             case 2:
+                if(loggedInUser != NULL) {
+                    printf("Já existe um usuário logado");
+                    break;
+                }
                 printf("Enter email: ");
                 scanf("%19s", email);
                 printf("Enter password: ");
@@ -35,6 +39,10 @@ int main() {
                 }
                 break;
             case 3:
+                if(loggedInUser == NULL) {
+                    printf("Nenhum usuario esta logado");
+                    break;
+                }
                 logout(&loggedInUser);
                 break;
             case 4:
