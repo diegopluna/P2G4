@@ -120,7 +120,7 @@ bool setEntry (User user, bool is_arrival) {
     time_t currentTime = time(NULL);
     struct tm* localTime = localtime(&currentTime);
 
-    char datetimeString[20];  // "yyyy-mm-dd hh:mm" + null terminator
+    char datetimeString[20];  // "yyyy-mm-dd hh:mm:ss" + null terminator
     strftime(datetimeString, sizeof(datetimeString), "%Y-%m-%d %H:%M:%S", localTime);
 
     printf("Current datetime: %s\n", datetimeString);
