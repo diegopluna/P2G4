@@ -176,13 +176,8 @@ User retrieveUserFromUID(const char* uid) {
 
 int main () {
     User entry_user;
-    //strcpy(uid,"5312F411");
 
     read_input();
-
-    //printf("len read uid: %ld", strlen(uid));
-    //printf("len given uid: %ld", strlen("5312F411"));
-    //printf("%d", strcmp(uid, "5312F411"));
 
     getUserFromDatabase(uid, &entry_user);
 
@@ -192,7 +187,7 @@ int main () {
 
     printf("próxima entrada: %d", is_arrival);
 
-    setEntry(entry_user, (int)is_arrival);
+    setEntry(entry_user, is_arrival);
 
     return 0;
 }
