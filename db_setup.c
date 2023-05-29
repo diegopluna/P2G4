@@ -32,7 +32,7 @@ int main() {
     // Create the "entries" table
     char createEntryTable[] = "CREATE TABLE IF NOT EXISTS entries ("
                               "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                              "uid TEXT NOT NULL,"
+                              "user_id TEXT NOT NULL,"
                               "datetime TEXT NOT NULL,"
                               "is_arrival INTEGER NOT NULL);";
 
@@ -45,6 +45,12 @@ int main() {
     }
 
     printf("Table 'entries' created successfully.\n");
+
+    char fillFirstUser[] = "INSERT INTO users (uid, name) VALUES ('5312F411', 'Sabinozinho de Andrade');";
+
+    rc = sqlite3_exec(db, fillFirstUser, 0, 0, 0);
+
+    printf("Populated table with first user.");
 
     // Close the database connection
     sqlite3_close(db);

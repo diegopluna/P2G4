@@ -1,22 +1,26 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <pthread.h>
 #include <sqlite3.h>
 #include <time.h>
 
-#define MAX_LENGTH 50
+#define MAX_LENGTH 12 //11+1
 
 // Global variables for synchronization
 pthread_mutex_t mutex;
 bool isDataAvailable = false;
 char inputData[MAX_LENGTH];
+int id;
+//char is_arrival = '1';
 
 // Thread function for reading from serial port
 void* serialThread(void* arg) {
     while (true) {
         char input[MAX_LENGTH];
         // Read input from serial port and store it in 'input' variable
+        fgets(input, MAX_LENGTH, stdin);
 
         // Acquire the mutex lock
         pthread_mutex_lock(&mutex);
@@ -33,9 +37,13 @@ void* serialThread(void* arg) {
 }
 
 // Function to handle SQLite callback for SELECT queries
-int selectCallback(void* data, int argc, char** argv, char** azColName) {
+int selectCallback(void* data, int argc, char** argv, char** ColName) {
     // Process the SELECT query results here
     // You can access the query results using argv[] array
+    id = atoi(argv[0]);
+    const char* name = argv[2];
+
+    printf("Nome do residente: %s\n", name);
 
     return 0;
 }
@@ -100,7 +108,7 @@ int main() {
             strftime(datetime, sizeof(datetime), "%Y-%m-%d %H:%M:%S", timeinfo);
 
             // Prepare the INSERT statement
-            snprintf(query, sizeof(query), "INSERT INTO entries (uid, datetime, is_arrival) VALUES ('%s', '%s', 1);", input, datetime);
+            snprintf(query, sizeof(query), "INSERT INTO entries (user_id, datetime, is_arrival) VALUES (%d, '%s', 1);", id, datetime);
             
             // Execute the INSERT statement
             rc = sqlite3_exec(db, query, 0, 0, 0);
@@ -110,6 +118,8 @@ int main() {
                 sqlite3_close(db);
                 return 1;
             }
+
+            id = 0;
 
             printf("Entry added successfully.\n");
         }
