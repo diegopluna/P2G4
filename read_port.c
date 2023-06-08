@@ -8,7 +8,7 @@
 #include <sqlite3.h>
 
 #define BUFFER_SIZE 10
-#define SERIAL_PORT "/dev/ttyACM0" //adapt, improvise, overcome (must have multiple options to correspond to different systems)
+#define SERIAL_PORT "/dev/ttyACM1" //adapt, improvise, overcome (must have multiple options to correspond to different systems)
 
 char uid[BUFFER_SIZE];
 
