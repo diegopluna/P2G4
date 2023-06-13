@@ -83,11 +83,11 @@ unsigned int hashPassword(const char* password) {
     return hash;
 }
 
-int signUp(User* logged_in) {
+int registerUser(User* logged_in) {
 
 
     if ( logged_in == NULL ||logged_in->user_type != 3) {
-        printf("User not authorized");
+        printf("Usuario nao autorizado");
         return -1;
     }
 
@@ -97,15 +97,15 @@ int signUp(User* logged_in) {
     char password[20];
     int user_type;
 
-    printf("Enter first name: ");
+    printf("Nome: ");
     scanf("%19s", first_name);
-    printf("Enter last name: ");
+    printf("Sobrenome: ");
     scanf("%19s", last_name);
-    printf("Enter user type: ");
+    printf("Tipo de usuario(1: Residente| 2: Preceptor| 3: Gerencia): ");
     scanf("%d", &user_type);
-    printf("Enter email: ");
+    printf("Email: ");
     scanf("%19s", email);
-    printf("Enter password: ");
+    printf("Senha: ");
     scanf("%19s", password);
 
     unsigned int pass_hash = hashPassword(password);
@@ -134,7 +134,7 @@ int signUp(User* logged_in) {
     }
 
     sqlite3_finalize(stmt);
-    printf("Account created successfully.\n");
+    printf("Usuario registrado com sucesso!.\n");
     return 0;
 }
 
@@ -173,7 +173,7 @@ User* signIn(const char* email, const char* password) {
         sqlite3_finalize(stmt);
         return user;
     } else if (rc == SQLITE_DONE) {
-        printf("Invalid email or password.\n");
+        printf("Email ou senha invalidos.\n");
         sqlite3_finalize(stmt);
         exit(-1);
     } else {
@@ -186,6 +186,6 @@ User* signIn(const char* email, const char* password) {
 void logout(User** user) {
     free(*user);
     *user = NULL;
-    printf("Logged out successfully.\n");
+    printf("Deslogado com sucesso.\n");
 }
 

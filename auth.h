@@ -16,7 +16,7 @@ typedef struct {
 
 int initializeDatabase();
 unsigned int hashPassword(const char* password);
-int signUp(User* logged_in);
+int registerUser(User* logged_in);
 User* signIn(const char* email, const char* password);
 void logout(User** user);
 
