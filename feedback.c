@@ -285,6 +285,8 @@ int main() {
     char * activity;
     getActivity(&activity);
 
+    printf("%s", activity);
+
     criteria criteria = getCriteria();
 
     printf("Date: %02d/%02d/%04d\n", dt.day, dt.month, dt.year);
