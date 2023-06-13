@@ -46,7 +46,7 @@ int main() {
 
     printf("Table 'entries' created successfully.\n");
 
-    char fillFirstUser[] = "INSERT INTO users (uid, name) VALUES ('5312F411', 'Sabinozinho de Andrade');";
+    char fillFirstUser[] = "INSERT INTO users (uid, name) VALUES ('5312F411', 'Fernanda Alves da Silva');";
 
     rc = sqlite3_exec(db, fillFirstUser, 0, 0, 0);
 

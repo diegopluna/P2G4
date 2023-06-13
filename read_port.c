@@ -8,7 +8,30 @@
 #include <sqlite3.h>
 
 #define BUFFER_SIZE 10
-#define SERIAL_PORT "/dev/ttyACM1" //adapt, improvise, overcome (must have multiple options to correspond to different systems)
+
+char* find_arduino_serial_port() {
+    struct sp_port** ports;
+    sp_list_ports(&ports);
+
+    char* arduinoPort = NULL;
+
+    // Iterate over the available ports and find the Arduino port
+    for (int i = 0; ports[i] != NULL; i++) {
+        struct sp_port* port = ports[i];
+        const char* portName = sp_get_port_name(port);
+
+        // Check if the port name matches the Arduino pattern
+        // Linux: Look for "ttyACM"// Windows: "COM"// macOS "cu.usbmodem"
+        if (strstr(portName, "ttyACM") != NULL || strstr(portName, "COM") != NULL || strstr(portName, "cu.usbmodem") != NULL) {
+            arduinoPort = strdup(portName);
+            break;
+        }
+    }
+
+    sp_free_port_list(ports);
+
+    return arduinoPort;
+}
 
 char uid[BUFFER_SIZE];
 
@@ -20,7 +43,10 @@ void* read_from_port(void* arg) {
     
     // Open the serial port
     struct sp_port* serialPort;
-    sp_get_port_by_name(SERIAL_PORT, &serialPort);
+
+    char * arduinoPort = find_arduino_serial_port();
+    
+    sp_get_port_by_name(arduinoPort, &serialPort);
     sp_open(serialPort, SP_MODE_READ);
     
     // Configure the serial port

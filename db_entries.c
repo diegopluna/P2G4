@@ -83,7 +83,7 @@ bool getEntryType (User user) {
 
     rc = sqlite3_step(stmt);
     if (rc == SQLITE_ROW) {
-        is_arrival = sqlite3_column_int(stmt, 0);
+        is_arrival = (sqlite3_column_int(stmt, 0)+1)%2;
     } else if (rc == SQLITE_DONE) {
         fprintf(stderr, "No previous entry; will set the next entry to arrival.\n");
         is_arrival = 1;
@@ -97,7 +97,8 @@ bool getEntryType (User user) {
     sqlite3_finalize(stmt);
     sqlite3_close(db);
 
-    return (is_arrival+1)%2;
+    //return (is_arrival+1)%2;
+    return is_arrival;
 }
 
 bool setEntry (User user, bool is_arrival) {
@@ -181,11 +182,11 @@ int main () {
 
     getUserFromDatabase(uid, &entry_user);
 
-    printf("id: %d, name: %s", entry_user.id, entry_user.name);
+    printf("Entry data:\nid: %d, name: %s\n", entry_user.id, entry_user.name);
 
     bool is_arrival = getEntryType(entry_user);
 
-    printf("próxima entrada: %d", is_arrival);
+    //printf("próxima entrada: %d", is_arrival);
 
     setEntry(entry_user, is_arrival);
 
