@@ -520,7 +520,17 @@ void retrieveAndPrintFeedbacks(int userId) {
         printf("User ID: %d\n", userId);
         printf("Datetime: %s\n", datetime);
         printf("Activity: %s\n", activity);
-        printf("Criteria: %s\n", criteria);
+        printf("Criteria:\n");
+        char* token = strtok(criteria, ",");
+        while (token != NULL) {
+            int labelIndex, grade;
+            sscanf(token, "%d:%d", &labelIndex, &grade);
+
+            if (labelIndex >= 0 && labelIndex < MAX_OPTIONS)
+                printf("%s: %d\n", labels[labelIndex], grade);
+
+            token = strtok(NULL, ",");
+        }
         printf("------------------------------\n");
     }
     getchar();
