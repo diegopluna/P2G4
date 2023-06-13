@@ -50,7 +50,11 @@ int main() {
 
     rc = sqlite3_exec(db, fillFirstUser, 0, 0, 0);
 
-    printf("Populated table with first user.");
+    char fillSecondUser[] = "INSERT INTO users (uid, name) VALUES ('00000000', 'Felipe Costa Neto');";
+
+    rc = sqlite3_exec(db, fillSecondUser, 0, 0, 0);
+
+    printf("Populated table with second user.");
 
     // Close the database connection
     sqlite3_close(db);
