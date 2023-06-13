@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <assert.h>
 #define MAX_OPTIONS 9
 
 typedef struct {
@@ -60,7 +60,7 @@ datetime getDate () {
     printf("Enter day (press enter for default): ");
     char input[3];
     fgets(input, sizeof(input), stdin);
-
+    assert(input!=0);
     if (input[0] != '\n') {
         getchar();
         sscanf(input, "%d", &dt.day);
@@ -83,7 +83,7 @@ datetime getDate () {
     char choice;
     printf("Do you want to enter the time? (y/n): ");
     scanf(" %c", &choice);
-
+    assert(choice == 'y' || choice == 'n');
     if (choice == 'y' || choice == 'Y') {
         printf("Enter time (hh:mm): ");
         scanf("%d:%d", &dt.hour, &dt.minute);
@@ -210,7 +210,7 @@ criteria getCriteria() {
         printf("Enter grade suggestion (0-10) for criterium %s (press enter for no suggestion): ", labels[i]);
         char input[4];
         scanf("%3s", input); // Read at most 3 characters (grade digits)
-
+        assert(input<=10);
         if (input[0] != '\0') {
             sscanf(input, "%d", &grd_buffer);
 

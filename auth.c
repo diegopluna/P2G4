@@ -7,7 +7,7 @@
 #include <string.h>
 #include "auth.h"
 #include "sqlite3.h"
-
+#include <assert.h>
 
 static sqlite3* db;
 
@@ -107,7 +107,7 @@ int registerUser(User* logged_in) {
     scanf("%19s", email);
     printf("Senha: ");
     scanf("%19s", password);
-
+    assert(user_type >0 && user_type<4);
     unsigned int pass_hash = hashPassword(password);
 
     char* insert_query = "INSERT INTO users (first_name, last_name, email, pass_hash, user_type) "

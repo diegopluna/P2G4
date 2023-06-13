@@ -4,6 +4,7 @@
 #include "auth.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 int residente1 = 1, residente2 = 2, residente3 = 3;
 char f_resident1[150], f_resident2[150], f_resident3[150];
 int option;
@@ -47,17 +48,20 @@ void printTerminal() {
                 scanf("%19s", email);
                 printf("Senha: ");
                 scanf("%19s", password);
+                assert(password != NULL);
                 loggedInUser = signIn(email, password);
                 if (loggedInUser != NULL) {
                     printf("\033[2J\033[H");
                     printf("Logado com sucesso!.\n");
                     printLoggedInTerminal();
-                    // user_type = loggedInUser->user_type;
+                    assert(loggedInUser != NULL);    // user_type = loggedInUser->user_type;
+
                 }
                 break;
             case 2:
                 if (loggedInUser == NULL) {
                     printf("Nenhum usuário esta logado");
+
                     break;
                 }
                 logout(&loggedInUser);
@@ -112,12 +116,14 @@ void printLoggedInTerminal() {
             printf("3. Logout\n");
             printf("Insira sua opcao: ");
             scanf("%d", &choice);
+            assert(choice==3);
         } else if (loggedInUser->user_type == 2) {
             printf("\033[2J\033[H");
             printf("Preceptor");
             printf("3. Logout\n");
             printf("Insira sua opcao: ");
             scanf("%d", &choice);
+            assert(choice==3);
         } else {
             printf("\033[2J\033[H");
             printf("1. Registrar Residente/Preceptor\n");
@@ -125,7 +131,7 @@ void printLoggedInTerminal() {
             printf("3. Logout\n");
             printf("Insira sua opcao: ");
             scanf("%d", &choice);
-
+            assert(choice > 0 && choice<4);
             switch (choice) {
                 case 1:
                     registerUser(loggedInUser);
